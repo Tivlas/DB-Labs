@@ -44,7 +44,7 @@
         + first_name VARCHAR 
         + last_name VARCHAR 
         + salary DECIMAL  
-        + phone VARCHAR
+        + phone CHAR
         + position VARCHAR 
         + password VARCHAR 
         + email VARCHAR 
@@ -60,7 +60,7 @@
     - Таблица: **client**.
     - Поля:
         + name VARCHAR
-        + phone VARCHAR 
+        + phone CHAR 
         + password VARCHAR 
         + email VARCHAR 
     - Связи:
