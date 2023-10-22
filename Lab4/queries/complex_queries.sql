@@ -52,10 +52,15 @@ SELECT first_name || ' ' || last_name AS Name,
     content,
     rating,
     "date",
-    p.name AS product
+    p.name AS product,
+    CASE
+        WHEN r."date" < NOW() - INTERVAL '1 year' THEN 'Очень старый'
+        WHEN r."date" < NOW() - INTERVAL '6 months' THEN 'Старый'
+        ELSE 'Новый'
+    END AS review_age
 FROM client
     JOIN review r USING(client_id)
-    RIGHT JOIN product p USING(product_id);
+    JOIN product p USING(product_id);
 
 -- @block
 -- получить заказы для каждого клиента
@@ -69,3 +74,34 @@ FROM client c
     JOIN "order" o USING(client_id)
     JOIN order_item oi USING(order_id)
     JOIN product p USING(product_id);
+
+-- @block
+-- получить всех людей, которые как либо связаны с магазином
+SELECT first_name || ' ' || last_name AS Name,
+    email
+FROM client
+UNION
+SELECT first_name || ' ' || last_name AS Name,
+    email
+FROM employee
+ORDER BY Name;
+
+-- @block
+-- получить имена клиентов, которые оформили >= 2 заказов, количество их заказов и общую стоимость
+SELECT first_name || ' ' || last_name AS Name,
+    email,
+    COUNT(*) AS "Number of orders",
+    SUM(o.price) AS Total
+FROM client
+    JOIN "order" o USING(client_id)
+GROUP BY email,
+    Name
+HAVING COUNT(*) >= 2;
+
+-- @block
+-- получить сотрудников, добавив столбец максимальной ЗП для его должности
+SELECT first_name || ' ' || last_name AS Name,
+    salary,
+    MAX(salary) over(PARTITION by position) AS max_salary,
+    DENSE_RANK() over(PARTITION by position) "rank"
+FROM employee;
