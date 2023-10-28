@@ -1,33 +1,39 @@
-CREATE OR REPLACE PROCEDURE update_cart_price_delete() LANGUAGE plpgsql AS $$ BEGIN
+CREATE OR REPLACE FUNCTION update_cart_price_delete() RETURNS TRIGGER AS $$ BEGIN
 UPDATE cart
 SET price = price - OLD.product_price * OLD.product_quantity
 WHERE cart_id = OLD.cart_id;
 
+RETURN NULL;
+
 END;
 
-$$;
+$$ LANGUAGE plpgsql;
 
 -----------------------------------------------------------------------------------
-CREATE OR REPLACE PROCEDURE update_cart_price_insert() LANGUAGE plpgsql AS $$ BEGIN
+CREATE OR REPLACE FUNCTION update_cart_price_insert() RETURNS TRIGGER AS $$ BEGIN
 UPDATE cart
 SET price = price + NEW.product_price * NEW.product_quantity
 WHERE cart_id = NEW.cart_id;
 
+RETURN NULL;
+
 END;
 
-$$;
+$$ LANGUAGE plpgsql;
 
 -----------------------------------------------------------------------------------
-CREATE OR REPLACE PROCEDURE create_cart_for_new_client() LANGUAGE plpgsql AS $$ BEGIN
+CREATE OR REPLACE FUNCTION create_cart_for_new_client() RETURNS TRIGGER AS $$ BEGIN
 INSERT INTO cart (client_id, price)
 VALUES (NEW.client_id, 0.0);
 
+RETURN NULL;
+
 END;
 
-$$;
+$$ LANGUAGE plpgsql;
 
 -----------------------------------------------------------------------------------
-CREATE OR REPLACE PROCEDURE copy_cart_items_to_order_items() LANGUAGE plpgsql AS $$
+CREATE OR REPLACE FUNCTION copy_cart_items_to_order_items() RETURNS TRIGGER AS $$
 DECLARE cur_cart_id INT;
 
 BEGIN
@@ -41,7 +47,7 @@ INSERT INTO order_item (
     product_quantity,
     product_price
   )
-SELECT order_id,
+SELECT NEW.order_id,
   product_id,
   product_quantity,
   product_price
@@ -55,8 +61,8 @@ UPDATE cart
 SET price = 0
 WHERE client_id = NEW.client_id;
 
+RETURN NULL;
+
 END;
 
-$$;
-
------------------------------------------------------------------------------------
+$$ LANGUAGE plpgsql;
