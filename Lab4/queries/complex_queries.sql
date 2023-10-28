@@ -29,6 +29,7 @@ FROM product p
 
 -- @block 
 -- выборка продуктов, категории продукта и скидки если есть активные
+CREATE VIEW products_active_discounts AS
 SELECT pc.name AS Category,
     p.name AS Name,
     price,
@@ -45,8 +46,12 @@ FROM product p
     LEFT JOIN discount d ON d.discount_id = product_discount.discount_id
     AND d.is_active = TRUE;
 
+SELECT *
+FROM products_active_discounts;
+
 -- @block
 -- получить клиентов и написанные ими отзывы на конкретные продукты, также продукты на которые не написали отзывов
+CREATE VIEW clients_reviews_all_poducts AS
 SELECT first_name || ' ' || last_name AS Name,
     email,
     content,
@@ -62,8 +67,12 @@ FROM client
     JOIN review r USING(client_id)
     JOIN product p USING(product_id);
 
+SELECT *
+FROM clients_reviews_all_poducts;
+
 -- @block
 -- получить заказы для каждого клиента
+CREATE VIEW clients_orders AS
 SELECT first_name || ' ' || last_name AS "Client name",
     email,
     o."date" AS "Order date",
@@ -75,8 +84,12 @@ FROM client c
     JOIN order_item oi USING(order_id)
     JOIN product p USING(product_id);
 
+SELECT *
+FROM clients_orders;
+
 -- @block
 -- получить всех людей, которые как либо связаны с магазином
+CREATE VIEW all_people AS
 SELECT first_name || ' ' || last_name AS Name,
     email
 FROM client
@@ -86,8 +99,12 @@ SELECT first_name || ' ' || last_name AS Name,
 FROM employee
 ORDER BY Name;
 
+SELECT *
+FROM all_people;
+
 -- @block
 -- получить имена клиентов, которые оформили >= 2 заказов, количество их заказов и общую стоимость
+CREATE VIEW clients_more_than_n_orders AS
 SELECT first_name || ' ' || last_name AS Name,
     email,
     COUNT(*) AS "Number of orders",
@@ -98,10 +115,17 @@ GROUP BY email,
     Name
 HAVING COUNT(*) >= 2;
 
+SELECT *
+FROM clients_more_than_n_orders;
+
 -- @block
 -- получить сотрудников, добавив столбец максимальной ЗП для его должности
+CREATE VIEW employees_max_salary AS
 SELECT first_name || ' ' || last_name AS Name,
     salary,
     MAX(salary) over(PARTITION by position) AS max_salary,
     DENSE_RANK() over(PARTITION by position) "rank"
 FROM employee;
+
+SELECT *
+FROM employees_max_salary;
