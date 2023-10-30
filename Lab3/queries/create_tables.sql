@@ -1,16 +1,26 @@
 DROP TABLE IF EXISTS "product_discount";
-DROP TABLE IF EXISTS "cart_item";
-DROP TABLE IF EXISTS "cart";
-DROP TABLE IF EXISTS "employee";
-DROP TABLE IF EXISTS "employee_role";
-DROP TABLE IF EXISTS "order_item";
-DROP TABLE IF EXISTS "order";
-DROP TABLE IF EXISTS "review";
-DROP TABLE IF EXISTS "discount";
-DROP TABLE IF EXISTS "client";
-DROP TABLE IF EXISTS "product";
-DROP TABLE IF EXISTS "product_category";
 
+DROP TABLE IF EXISTS "cart_item";
+
+DROP TABLE IF EXISTS "cart";
+
+DROP TABLE IF EXISTS "employee" CASCADE;
+
+DROP TABLE IF EXISTS "employee_role";
+
+DROP TABLE IF EXISTS "order_item";
+
+DROP TABLE IF EXISTS "order";
+
+DROP TABLE IF EXISTS "review";
+
+DROP TABLE IF EXISTS "discount";
+
+DROP TABLE IF EXISTS "client";
+
+DROP TABLE IF EXISTS "product";
+
+DROP TABLE IF EXISTS "product_category";
 
 CREATE TABLE "product" (
     "product_id" serial PRIMARY KEY,
@@ -57,7 +67,7 @@ CREATE TABLE "employee_role" (
 CREATE TABLE "order" (
     "order_id" serial PRIMARY KEY,
     "client_id" int NOT NULL,
-    "date" timestamp NOT NULL,
+    "date" timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "price" numeric(7, 2) NOT NULL CONSTRAINT positive_price CHECK(price > 0)
 );
 
@@ -92,7 +102,7 @@ CREATE TABLE "review" (
         rating > 0
         AND rating < 6
     ),
-    "date" timestamp NOT NULL
+    "date" timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE "discount" (

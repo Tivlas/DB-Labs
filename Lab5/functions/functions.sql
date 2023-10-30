@@ -1,3 +1,10 @@
+-- @block
+DROP FUNCTION IF EXISTS update_cart_price_delete;
+DROP FUNCTION IF EXISTS update_cart_price_insert;
+DROP FUNCTION IF EXISTS create_cart_for_new_client;
+DROP FUNCTION IF EXISTS copy_cart_items_to_order_items;
+
+-- @block
 CREATE OR REPLACE FUNCTION update_cart_price_delete() RETURNS TRIGGER AS $$ BEGIN
 UPDATE cart
 SET price = price - OLD.product_price * OLD.product_quantity
