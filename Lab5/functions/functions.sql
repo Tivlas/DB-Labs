@@ -1,26 +1,22 @@
 -- @block
-DROP FUNCTION IF EXISTS update_cart_price_delete;
-DROP FUNCTION IF EXISTS update_cart_price_insert;
+DROP FUNCTION IF EXISTS update_cart_price;
+
 DROP FUNCTION IF EXISTS create_cart_for_new_client;
+
 DROP FUNCTION IF EXISTS copy_cart_items_to_order_items;
 
 -- @block
-CREATE OR REPLACE FUNCTION update_cart_price_delete() RETURNS TRIGGER AS $$ BEGIN
+CREATE OR REPLACE FUNCTION update_cart_price() RETURNS TRIGGER AS $$ BEGIN IF TG_OP = 'DELETE' THEN
 UPDATE cart
 SET price = price - OLD.product_price * OLD.product_quantity
 WHERE cart_id = OLD.cart_id;
 
-RETURN NULL;
-
-END;
-
-$$ LANGUAGE plpgsql;
-
------------------------------------------------------------------------------------
-CREATE OR REPLACE FUNCTION update_cart_price_insert() RETURNS TRIGGER AS $$ BEGIN
+ELSIF TG_OP = 'INSERT' THEN
 UPDATE cart
 SET price = price + NEW.product_price * NEW.product_quantity
 WHERE cart_id = NEW.cart_id;
+
+END IF;
 
 RETURN NULL;
 
