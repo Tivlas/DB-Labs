@@ -1,11 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using Shop;
 using Shop.Models;
+using Shop.Services.Authentication;
+using Shop.Services.DbServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<DbLabsContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DbLabsContext")));
+
+builder.Services.AddScoped<IShopAuthenticationService, ShopAuthenticationService>();
+builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddAuthentication().AddCookie("Cookies");
+builder.Services.ConfigLogger();
 
 var app = builder.Build();
 
@@ -19,7 +27,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

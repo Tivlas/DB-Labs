@@ -44,7 +44,7 @@ CREATE TABLE "client" (
     "last_name" varchar(30) NOT NULL,
     "phone" char(13) NOT NULL,
     "password" varchar(20) NOT NULL,
-    "email" varchar(30) NOT NULL
+    "email" varchar(30) UNIQUE NOT NULL
 );
 
 CREATE TABLE "employee" (

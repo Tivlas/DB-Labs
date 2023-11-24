@@ -1,0 +1,33 @@
+﻿<p>Does not have an account?</p>
+<div class="ms-auto">
+	<form id="loginForm" class="form-inline">
+		<button id="login" type="submit" class="nav-link btn btn-link text-dark" asp-area="" asp-controller="Signup" asp-action="Index">
+			Sign up
+		</button>
+	</form>
+</div>
+<h1>Login</h1>
+<form method="post" action="/Login/Login">
+	<div class="form-group">
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="Email" class="form-control" required>
+	</div>
+
+	<div class="form-group">
+		<label for="password">Password:</label>
+		<input type="password" id="password" name="Password" class="form-control" required>
+	</div>
+
+	<div class="form-group">
+		<label for="loginAsEmployee">Login as Employee:</label>
+		<input type="checkbox" id="loginAsEmployee" name="LoginAsEmployee">
+	</div>
+	<br />
+	<button type="submit" class="btn btn-primary">Log In</button>
+</form>
+@if (TempData.ContainsKey("ErrorMessage"))
+{
+	<div class="alert alert-danger">
+		@TempData["ErrorMessage"]
+	</div>
+}
