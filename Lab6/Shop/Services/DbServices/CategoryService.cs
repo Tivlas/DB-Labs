@@ -13,17 +13,17 @@ public class CategoryService : ICategoryService
 		_context = context;
 	}
 
-	public async Task<ProductCategory?> GetCategoryByIdAsync(int id)
+	public async Task<ProductCategory?> GetByIdAsync(int id)
 	{
 		return await _context.ProductCategories.FromSqlInterpolated($"select * from product_category where product_category_id = {id}").FirstOrDefaultAsync();
 	}
 
-	public async Task<IEnumerable<ProductCategory>?> GetCategoriesAsync()
+	public async Task<IEnumerable<ProductCategory>?> GetListAsync()
 	{
 		return await _context.ProductCategories.FromSqlRaw("select * from product_category").ToListAsync();
 	}
 
-	public async Task<bool> AddCategoryAsync(string name)
+	public async Task<bool> AddAsync(string name)
 	{
 		try
 		{

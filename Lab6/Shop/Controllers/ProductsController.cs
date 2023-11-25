@@ -51,7 +51,7 @@ namespace Shop.Controllers
 		[CustomAuthorize(Roles = "Admin,ProductManager")]
 		public async Task<IActionResult> Create()
 		{
-			ViewData["ProductCategoryId"] = new SelectList(await _categoryService.GetCategoriesAsync(), "ProductCategoryId", "Name");
+			ViewData["ProductCategoryId"] = new SelectList(await _categoryService.GetListAsync(), "ProductCategoryId", "Name");
 			return View();
 		}
 
@@ -68,7 +68,7 @@ namespace Shop.Controllers
 				await _productService.AddAsync(product);
 				return RedirectToAction(nameof(Index));
 			}
-			ViewData["ProductCategoryId"] = new SelectList(await _categoryService.GetCategoriesAsync(), "ProductCategoryId", "Name", product.ProductCategoryId);
+			ViewData["ProductCategoryId"] = new SelectList(await _categoryService.GetListAsync(), "ProductCategoryId", "Name", product.ProductCategoryId);
 			return View(product);
 		}
 
@@ -86,7 +86,7 @@ namespace Shop.Controllers
 			{
 				return NotFound();
 			}
-			ViewData["ProductCategoryId"] = new SelectList(await _categoryService.GetCategoriesAsync(), "ProductCategoryId", "Name", product.ProductCategoryId);
+			ViewData["ProductCategoryId"] = new SelectList(await _categoryService.GetListAsync(), "ProductCategoryId", "Name", product.ProductCategoryId);
 			return View(product);
 		}
 
@@ -111,7 +111,7 @@ namespace Shop.Controllers
 				}
 				return RedirectToAction(nameof(Index));
 			}
-			ViewData["ProductCategoryId"] = new SelectList(await _categoryService.GetCategoriesAsync(), "ProductCategoryId", "Name", product.ProductCategoryId);
+			ViewData["ProductCategoryId"] = new SelectList(await _categoryService.GetListAsync(), "ProductCategoryId", "Name", product.ProductCategoryId);
 			return View(product);
 		}
 

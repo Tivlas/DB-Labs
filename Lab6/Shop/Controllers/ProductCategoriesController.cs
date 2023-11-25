@@ -24,7 +24,7 @@ namespace Shop.Controllers
 		[CustomAuthorize(Roles = "Admin, ProductManager")]
 		public async Task<IActionResult> Index()
 		{
-			var categories = await _categoryService.GetCategoriesAsync();
+			var categories = await _categoryService.GetListAsync();
 			return categories != null ? View(categories) : Problem("No categories.");
 		}
 
@@ -37,7 +37,7 @@ namespace Shop.Controllers
 				return NotFound();
 			}
 
-			var productCategory = await _categoryService.GetCategoryByIdAsync(id.Value);
+			var productCategory = await _categoryService.GetByIdAsync(id.Value);
 			if (productCategory == null)
 			{
 				return NotFound();
@@ -63,7 +63,7 @@ namespace Shop.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				await _categoryService.AddCategoryAsync(productCategory.Name);
+				await _categoryService.AddAsync(productCategory.Name);
 				return RedirectToAction(nameof(Index));
 			}
 			return View(productCategory);
@@ -78,7 +78,7 @@ namespace Shop.Controllers
 				return NotFound();
 			}
 
-			var productCategory = await _categoryService.GetCategoryByIdAsync(id.Value);
+			var productCategory = await _categoryService.GetByIdAsync(id.Value);
 			if (productCategory == null)
 			{
 				return NotFound();
@@ -119,7 +119,7 @@ namespace Shop.Controllers
 				return NotFound();
 			}
 
-			var productCategory = await _categoryService.GetCategoryByIdAsync(id.Value);
+			var productCategory = await _categoryService.GetByIdAsync(id.Value);
 			if (productCategory == null)
 			{
 				return NotFound();
@@ -134,7 +134,7 @@ namespace Shop.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
-			var productCategory = await _categoryService.GetCategoryByIdAsync(id);
+			var productCategory = await _categoryService.GetByIdAsync(id);
 			if (productCategory != null)
 			{
 				if (await _categoryService.DeleteAsync(id) == false)
