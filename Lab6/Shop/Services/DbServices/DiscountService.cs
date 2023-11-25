@@ -50,11 +50,11 @@ public class DiscountService : IDiscountService
 		return false;
 	}
 
-	public async Task<bool> DeleteAsync(Discount ds)
+	public async Task<bool> DeleteAsync(int id)
 	{
 		try
 		{
-			await _context.Database.ExecuteSqlInterpolatedAsync($"call delete_discount_by_id({ds.DiscountId})");
+			await _context.Database.ExecuteSqlInterpolatedAsync($"call delete_discount_by_id({id})");
 			return true;
 		}
 		catch (Exception e)

@@ -127,9 +127,7 @@ namespace Shop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var discount = new Discount { DiscountId = id};
-
-			if (await _discountService.DeleteAsync(discount) == false)
+			if (await _discountService.DeleteAsync(id) == false)
 			{
 				return Problem("Update failed");
 			}

@@ -139,13 +139,9 @@ namespace Shop.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
-			var product = await _productService.GetByIdAsync(id);
-			if (product != null)
+			if (await _productService.DeleteAsync(id) == false)
 			{
-				if (await _productService.DeleteAsync(id) == false)
-				{
-					return Problem("Delete failed!");
-				}
+				return Problem("Delete failed!");
 			}
 			return RedirectToAction(nameof(Index));
 		}
