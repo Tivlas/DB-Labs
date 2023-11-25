@@ -25,7 +25,7 @@ public partial class Product
 
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
-    public virtual ProductCategory ProductCategory { get; set; } = null!;
+    public virtual ProductCategory? ProductCategory { get; set; }
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
