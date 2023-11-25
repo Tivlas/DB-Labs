@@ -14,6 +14,7 @@ builder.Services.AddScoped<IShopAuthenticationService, ShopAuthenticationService
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddAuthentication().AddCookie("Cookies");
 builder.Services.ConfigLogger();
 
