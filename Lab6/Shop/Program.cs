@@ -17,6 +17,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IDiscountService, DiscountService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 builder.Services.AddAuthentication().AddCookie("Cookies");
 builder.Services.ConfigLogger();

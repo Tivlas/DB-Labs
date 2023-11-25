@@ -65,4 +65,10 @@ public class ClientService : IClientService
 		}
 		return c;
 	}
+
+	public async Task<int?> GetIdByEmailAsync(string email)
+	{
+		var client = await _context.Clients.FromSqlInterpolated($"select * from client where email = {email}").FirstOrDefaultAsync();
+		return client?.ClientId;
+	}
 }
