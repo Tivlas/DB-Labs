@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.Attributes;
 using Shop.Models;
 using Shop.Services.DbServices;
 
@@ -49,7 +50,8 @@ public class SignupController : Controller
 		return RedirectToAction("Index", "Home");
 	}
 
-	public async Task<IActionResult> SignupEmployee(Employee employee)
+	[CustomAuthorize(Roles = "Admin, EmployeeManager")]
+	public async Task<IActionResult> AddEmployee(Employee employee)
 	{
 		await LoadRolesAsync();
 		if (ModelState.IsValid)

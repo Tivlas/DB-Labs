@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Shop.Attributes;
 
 namespace Shop.Controllers;
 public class LoginController : Controller
@@ -63,6 +64,7 @@ public class LoginController : Controller
     }
 
     [HttpPost]
+    [CustomAuthorize]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

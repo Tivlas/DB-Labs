@@ -1,6 +1,6 @@
 ﻿@model Shop.Models.Employee
 
-<form method="post" action="/Signup/SignupEmployee">
+<form method="post" action="/Signup/AddEmployee">
 	<label for="firstName">First Name:</label>
 	<input type="text" id="firstName" name="FirstName" />
 
@@ -30,7 +30,7 @@
 		}
 	</select>
 
-	<button type="submit">Sign Up</button>
+	<button type="submit">Add</button>
 </form>
 
 @if (TempData.ContainsKey("ErrorMessage"))
