@@ -1,6 +1,7 @@
 ﻿@{
 	var addEmployeeRoles = new List<string>() { "Admin", "EmployeeManager" };
 	var productRoles = new List<string>() { "Admin", "ProductManager" };
+	var discountRoles = new List<string>() { "Admin", "DiscountManager" };
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +40,12 @@
 						{
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="ProductCategories" asp-action="Index">Categories</a>
+							</li>
+						}
+						@if (productRoles.Any(r => User.IsInRole(r)))
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Discounts" asp-action="Index">Discounts</a>
 							</li>
 						}
 						<li class="nav-item">
