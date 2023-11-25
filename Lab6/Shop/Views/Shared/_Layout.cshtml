@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+	var addEmployeeRoles = new List<string>() { "Admin", "EmployeeManager" };
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -25,7 +28,7 @@
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 						</li>
-						@if (User.IsInRole("EmployeeManager"))
+						@if (addEmployeeRoles.Any(r => User.IsInRole(r)))
 						{
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Signup" asp-action="SignupEmployee">AddEmployee</a>
@@ -33,7 +36,7 @@
 						}
 					</ul>
 				</div>
-				@if (User.Identity.IsAuthenticated)
+				@if (User.Identity is not null && User.Identity.IsAuthenticated)
 				{
 					<div class="ms-auto">
 						<form id="loginForm" class="form-inline" method="post">

@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using Shop.Models;
 
 namespace Shop.Services.DbServices;
@@ -55,8 +56,26 @@ public class EmployeeService : IEmployeeService
 		Employee? emp = null;
 		try
 		{
-			emp = await _context.Employees.FromSqlInterpolated($"SELECT e.employee_id, e.employee_role_id, e.first_name, e.last_name, e.salary, e.phone, e.position, e.password, e.email, r.name FROM employee AS e INNER JOIN employee_role AS r ON e.employee_role_id = r.employee_role_id WHERE e.email = {email} AND e.password = {password}")
-			  .Include(e => e.EmployeeRole).FirstOrDefaultAsync();
+			var emailParam = new NpgsqlParameter("p_email", email);
+			var passwordParam = new NpgsqlParameter("p_password", password);
+
+			var query = "SELECT * FROM get_employee_with_role(@p_email, @p_password)";
+
+			emp = await _context.Employees
+				.FromSqlRaw(query, emailParam, passwordParam)
+				.Select(e => new Employee
+				{
+					EmployeeId = e.EmployeeId,
+					FirstName = e.FirstName,
+					LastName = e.LastName,
+					Email = e.Email,
+					Password = e.Password,
+					Salary = e.Salary,
+					Phone = e.Phone,
+					EmployeeRole = e.EmployeeRole,
+					EmployeeRoleId = e.EmployeeRoleId,
+				})
+				.FirstOrDefaultAsync();
 		}
 		catch (Exception e)
 		{

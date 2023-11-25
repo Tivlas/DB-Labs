@@ -52,8 +52,9 @@ public class LoginController : Controller
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, client!.FirstName),
-                new Claim(ClaimTypes.Email, email)
-            };
+                new Claim(ClaimTypes.Email, email),
+				new Claim(ClaimTypes.Role, "Client"),
+			};
 
             var claimsIdentity = new ClaimsIdentity(claims, "Authentication");
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
