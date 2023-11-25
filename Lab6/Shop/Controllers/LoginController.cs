@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Shop.Services.Authentication;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Models;
-using Shop.Services.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Shop.Controllers;

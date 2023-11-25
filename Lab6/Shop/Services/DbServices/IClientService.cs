@@ -5,5 +5,5 @@ public interface IClientService
 {
 	Task<bool> AddClientAsync(Client client);
 	Task<Client?> FindAsync(string email);
-	Task<Client?> VerifyAsync(string email, string password);
+	Task<Client?> LoginAsync(string email, string password);
 }

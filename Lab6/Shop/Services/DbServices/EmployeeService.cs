@@ -1,14 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 using Shop.Models;
 
 namespace Shop.Services.DbServices;
 
-public class EmployeeService
+public class EmployeeService : IEmployeeService
 {
 	private readonly DbLabsContext _context;
-	private readonly ILogger<EmployeeService> _logger;
+	private readonly ILogger<IEmployeeService> _logger;
 
-	public EmployeeService(DbLabsContext context, ILogger<EmployeeService> logger)
+	public EmployeeService(DbLabsContext context, ILogger<IEmployeeService> logger)
 	{
 		_context = context;
 		_logger = logger;
@@ -49,19 +50,19 @@ public class EmployeeService
 		return c;
 	}
 
-	public async Task<Employee?> VerifyAsync(string email, string password)
+	public async Task<Employee?> LoginAsync(string email, string password)
 	{
-		Employee? c = null;
+		Employee? emp = null;
 		try
 		{
-			c = await _context.Employees.FromSqlInterpolated($"SELECT * FROM Employee WHERE email = {email} AND password = {password}")
-			   .AsNoTracking().FirstOrDefaultAsync();
+			emp = await _context.Employees.FromSqlInterpolated($"SELECT e.employee_id, e.employee_role_id, e.first_name, e.last_name, e.salary, e.phone, e.position, e.password, e.email, r.name FROM employee AS e INNER JOIN employee_role AS r ON e.employee_role_id = r.employee_role_id WHERE e.email = {email} AND e.password = {password}")
+			  .Include(e => e.EmployeeRole).FirstOrDefaultAsync();
 		}
 		catch (Exception e)
 		{
 			_logger.LogError(e.StackTrace + ": " + e.Message);
 			return null;
 		}
-		return c;
+		return emp;
 	}
 }

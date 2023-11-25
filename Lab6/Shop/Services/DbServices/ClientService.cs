@@ -7,9 +7,9 @@ namespace Shop.Services.DbServices;
 public class ClientService : IClientService
 {
 	private readonly DbLabsContext _context;
-	private readonly ILogger<ClientService> _logger;
+	private readonly ILogger<IClientService> _logger;
 
-	public ClientService(DbLabsContext context, ILogger<ClientService> logger)
+	public ClientService(DbLabsContext context, ILogger<IClientService> logger)
 	{
 		_context = context;
 		_logger = logger;
@@ -50,7 +50,7 @@ public class ClientService : IClientService
 		return c;
 	}
 
-	public async Task<Client?> VerifyAsync(string email, string password)
+	public async Task<Client?> LoginAsync(string email, string password)
 	{
 		Client? c = null;
 		try

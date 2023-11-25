@@ -23,5 +23,5 @@ public partial class Employee
 
     public string Email { get; set; } = null!;
 
-    public virtual EmployeeRole EmployeeRole { get; set; } = null!;
+    public virtual EmployeeRole? EmployeeRole { get; set; }
 }

@@ -1,0 +1,41 @@
+﻿@model Shop.Models.Employee
+
+<form method="post" action="/Signup/SignupEmployee">
+	<label for="firstName">First Name:</label>
+	<input type="text" id="firstName" name="FirstName" />
+
+	<label for="lastName">Last Name:</label>
+	<input type="text" id="lastName" name="LastName" />
+
+	<label for="salary">Salary:</label>
+	<input type="number" id="salary" name="Salary" />
+
+	<label for="phone">Phone:</label>
+	<input type="text" id="phone" name="Phone" />
+
+	<label for="position">Position:</label>
+	<input type="text" id="position" name="Position" />
+
+	<label for="password">Password:</label>
+	<input type="password" id="password" name="Password" />
+
+	<label for="email">Email:</label>
+	<input type="email" id="email" name="Email" />
+
+	<label for="employeeRoleId">Role:</label>
+	<select id="employeeRoleId" name="EmployeeRoleId">
+		@foreach (var role in TempData["Roles"] as List<Shop.Models.EmployeeRole>)
+		{
+			<option value="@role.EmployeeRoleId">@role.Name</option>
+		}
+	</select>
+
+	<button type="submit">Sign Up</button>
+</form>
+
+@if (TempData.ContainsKey("ErrorMessage"))
+{
+	<div class="alert alert-danger">
+		@TempData["ErrorMessage"]
+	</div>
+}
