@@ -1,8 +1,7 @@
 ﻿@using System.Security.Claims;
 @{
 	var addEmployeeRoles = new List<string>() { "Admin", "EmployeeManager" };
-	var productRoles = new List<string>() { "Admin", "ProductManager" };
-	var discountRoles = new List<string>() { "Admin", "DiscountManager" };
+	var productCategoriesRoles = new List<string>() { "Admin", "ProductManager" };
 	var cartRoles = new List<string>() { "Client" };
 }
 <!DOCTYPE html>
@@ -38,18 +37,15 @@
 								<a class="nav-link text-dark" asp-area="" asp-controller="Signup" asp-action="SignupEmployee">AddEmployee</a>
 							</li>
 						}
-						@if (productRoles.Any(r => User.IsInRole(r)))
+						@if (productCategoriesRoles.Any(r => User.IsInRole(r)))
 						{
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="ProductCategories" asp-action="Index">Categories</a>
 							</li>
 						}
-						@if (productRoles.Any(r => User.IsInRole(r)))
-						{
-							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Discounts" asp-action="Index">Discounts</a>
-							</li>
-						}
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Discounts" asp-action="Index">Discounts</a>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
 						</li>
