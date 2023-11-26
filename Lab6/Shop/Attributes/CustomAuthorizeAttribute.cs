@@ -10,7 +10,7 @@ public class CustomAuthorizeAttribute : AuthorizeAttribute, IAuthorizationFilter
 	{
 		var user = context.HttpContext.User;
 
-		if (user.Identity is not null && !user.Identity.IsAuthenticated)
+		if (user.Identity is null || !user.Identity.IsAuthenticated)
 		{
 			context.Result = new RedirectToActionResult("Index", "Login", null);
 			return;
