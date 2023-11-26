@@ -125,7 +125,7 @@ namespace Shop.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[CustomAuthorize(Roles = "Client")]
-		public async Task<IActionResult> Edit(int id, [Bind("CartItemId,CartId,ProductId,ProductQuantity,ProductPrice")] CartItem cartItem)
+		public async Task<IActionResult> Edit(int id, [Bind("CartItemId, ProductQuantity")] CartItem cartItem)
 		{
 			if (id != cartItem.CartItemId)
 			{

@@ -1,4 +1,5 @@
-﻿@{
+﻿@using System.Security.Claims;
+@{
 	var addEmployeeRoles = new List<string>() { "Admin", "EmployeeManager" };
 	var productRoles = new List<string>() { "Admin", "ProductManager" };
 	var discountRoles = new List<string>() { "Admin", "DiscountManager" };
@@ -65,7 +66,7 @@
 					<div class="ms-auto">
 						<form id="loginForm" class="form-inline" method="post">
 							<button id="login" type="submit" class="nav-link btn btn-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">
-								Logout
+								Logout (@User.Identity.Name: @User.FindFirstValue(ClaimTypes.Role))
 							</button>
 						</form>
 					</div>

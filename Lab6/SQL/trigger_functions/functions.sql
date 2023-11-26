@@ -22,7 +22,7 @@ WHERE cart_id = NEW.cart_id;
 
 ELSIF TG_OP = 'UPDATE' THEN
 UPDATE cart
-SET price = NEW.product_quantity * NEW.product_price
+SET price = price + (NEW.product_quantity - OLD.product_quantity) * NEW.product_price
 WHERE cart_id = NEW.cart_id;
 
 END IF;
@@ -89,6 +89,11 @@ WHERE product_id = NEW.product_id;
 ELSIF TG_OP = 'DELETE' THEN
 UPDATE product
 SET quantity = quantity + OLD.product_quantity
+WHERE product_id = OLD.product_id;
+
+ELSIF TG_OP = 'UPDATE' THEN
+UPDATE product
+SET quantity = quantity - (NEW.product_quantity - OLD.product_quantity)
 WHERE product_id = OLD.product_id;
 
 END IF;
