@@ -7,10 +7,12 @@ namespace Shop.Services.DbServices;
 public class ReviewService : IReviewService
 {
 	private readonly DbLabsContext _context;
+	private readonly ILogger<ReviewService> _logger;
 
-	public ReviewService(DbLabsContext context)
+	public ReviewService(DbLabsContext context, ILogger<ReviewService> logger)
 	{
 		_context = context;
+		_logger = logger;
 	}
 
 	public async Task<IEnumerable<Review>?> GetListAsync()
@@ -68,9 +70,9 @@ public class ReviewService : IReviewService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_review({r.ProductId},{r.ClientId},{r.Content},{r.Rating})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}
@@ -82,9 +84,9 @@ public class ReviewService : IReviewService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call update_review({r.ReviewId},{r.Content},{r.Rating})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}
@@ -96,9 +98,9 @@ public class ReviewService : IReviewService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call delete_review({r.ReviewId})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}

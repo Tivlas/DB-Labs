@@ -6,25 +6,27 @@ namespace Shop;
 
 public static class LoggerConfig
 {
+	private static IServiceCollection _services;
+
 	public static void ConfigLogger(this IServiceCollection services)
 	{
-		ConfigClientService(services);
-		ConfigEmployeeService(services);
+		_services = services ?? throw new ArgumentNullException(nameof(services));
+		ConfigLogForService<ICartService>("Logs/CartService.log");
+		ConfigLogForService<ICategoryService>("Logs/CategoryService.log");
+		ConfigLogForService<IClientService>("Logs/ClientService.log");
+		ConfigLogForService<IDiscountService>("Logs/DiscountService.log");
+		ConfigLogForService<IEmployeeService>("Logs/EmployeeService.log");
+		ConfigLogForService<IOrderService>("Logs/OrderService.log");
+		ConfigLogForService<IProductService>("Logs/ProductService.log");
+		ConfigLogForService<IReviewService>("Logs/ReviewService.log");
+		ConfigLogForService<IRoleService>("Logs/RoleService.log");
 	}
 
-	private static void ConfigClientService(IServiceCollection services)
+	private static void ConfigLogForService<T>(string fileName)
 	{
-		var logger = new LoggerConfiguration().WriteTo.File("Logs/ClientService.log").CreateLogger();
+		var logger = new LoggerConfiguration().WriteTo.File(fileName).CreateLogger();
 		var serilogLoggerFactory = new SerilogLoggerFactory(logger);
-		var serviceLogger = serilogLoggerFactory.CreateLogger<IClientService>();
-		services.AddSingleton(serviceLogger);
-	}
-
-	private static void ConfigEmployeeService(IServiceCollection services)
-	{
-		var logger = new LoggerConfiguration().WriteTo.File("Logs/EmployeeService.log").CreateLogger();
-		var serilogLoggerFactory = new SerilogLoggerFactory(logger);
-		var serviceLogger = serilogLoggerFactory.CreateLogger<IEmployeeService>();
-		services.AddSingleton(serviceLogger);
+		var serviceLogger = serilogLoggerFactory.CreateLogger<T>();
+		_services.AddSingleton(serviceLogger);
 	}
 }

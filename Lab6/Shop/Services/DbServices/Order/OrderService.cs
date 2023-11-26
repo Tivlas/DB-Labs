@@ -6,10 +6,12 @@ namespace Shop.Services.DbServices;
 public class OrderService : IOrderService
 {
 	private readonly DbLabsContext _context;
+	private readonly ILogger<OrderService> _logger;
 
-	public OrderService(DbLabsContext context)
+	public OrderService(DbLabsContext context, ILogger<OrderService> logger)
 	{
 		_context = context;
+		_logger = logger;
 	}
 
 	public async Task<IEnumerable<Order>?> GetListAsync()
@@ -50,9 +52,9 @@ public class OrderService : IOrderService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_order({order.ClientId},{order.Price})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}

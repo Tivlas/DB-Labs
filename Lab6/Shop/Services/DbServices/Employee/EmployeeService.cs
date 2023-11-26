@@ -9,7 +9,7 @@ public class EmployeeService : IEmployeeService
 	private readonly DbLabsContext _context;
 	private readonly ILogger<IEmployeeService> _logger;
 
-	public EmployeeService(DbLabsContext context, ILogger<IEmployeeService> logger)
+	public EmployeeService(DbLabsContext context, ILogger<EmployeeService> logger)
 	{
 		_context = context;
 		_logger = logger;

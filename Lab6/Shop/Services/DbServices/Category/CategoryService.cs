@@ -6,10 +6,12 @@ namespace Shop.Services.DbServices;
 public class CategoryService : ICategoryService
 {
 	private readonly DbLabsContext _context;
+	private readonly ILogger<CategoryService> _logger;
 
-	public CategoryService(DbLabsContext context)
+	public CategoryService(DbLabsContext context, ILogger<CategoryService> logger)
 	{
 		_context = context;
+		_logger = logger;
 	}
 
 	public async Task<ProductCategory?> GetByIdAsync(int id)
@@ -29,9 +31,9 @@ public class CategoryService : ICategoryService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_category({name})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}
@@ -43,9 +45,9 @@ public class CategoryService : ICategoryService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call delete_category_by_id({id})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}
@@ -57,9 +59,9 @@ public class CategoryService : ICategoryService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call update_category({id}, {newName})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}

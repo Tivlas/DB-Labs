@@ -6,10 +6,12 @@ namespace Shop.Services.DbServices;
 public class DiscountService : IDiscountService
 {
 	private readonly DbLabsContext _context;
+	private readonly ILogger<DiscountService> _logger;
 
-	public DiscountService(DbLabsContext context)
+	public DiscountService(DbLabsContext context, ILogger<DiscountService> logger)
 	{
 		_context = context;
+		_logger = logger;
 	}
 
 	public async Task<IEnumerable<Discount>?> GetListAsync()
@@ -32,9 +34,9 @@ public class DiscountService : IDiscountService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_product_discounts({discountId},{productIds.ToArray()})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}
@@ -46,9 +48,9 @@ public class DiscountService : IDiscountService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call update_discount({ds.DiscountId},{ds.Description},{ds.Name}, {ds.Percent},{ds.IsActive})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}
@@ -60,9 +62,9 @@ public class DiscountService : IDiscountService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call delete_discount_by_id({id})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}

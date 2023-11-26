@@ -6,10 +6,12 @@ namespace Shop.Services.DbServices;
 public class ProductService : IProductService
 {
 	private readonly DbLabsContext _context;
+	private readonly ILogger<ProductService> _logger;
 
-	public ProductService(DbLabsContext context)
+	public ProductService(DbLabsContext context, ILogger<ProductService> logger)
 	{
 		_context = context;
+		_logger = logger;
 	}
 
 	public async Task<IEnumerable<Product>?> GetListAsync()
@@ -71,9 +73,9 @@ public class ProductService : IProductService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_product({product.ProductCategoryId},{product.Price},{product.Name},{product.ProductionDate},{product.Quantity},{product.Brand},{product.Description})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}
@@ -85,9 +87,9 @@ public class ProductService : IProductService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call update_product({product.ProductId},{product.ProductCategoryId},{product.Price},{product.Name},{product.ProductionDate},{product.Quantity},{product.Brand},{product.Description})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}
@@ -99,9 +101,9 @@ public class ProductService : IProductService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call delete_product_by_id({id})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}

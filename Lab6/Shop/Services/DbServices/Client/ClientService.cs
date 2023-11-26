@@ -8,7 +8,7 @@ public class ClientService : IClientService
 	private readonly DbLabsContext _context;
 	private readonly ILogger<IClientService> _logger;
 
-	public ClientService(DbLabsContext context, ILogger<IClientService> logger)
+	public ClientService(DbLabsContext context, ILogger<ClientService> logger)
 	{
 		_context = context;
 		_logger = logger;

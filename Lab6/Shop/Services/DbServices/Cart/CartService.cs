@@ -6,10 +6,12 @@ namespace Shop.Services.DbServices;
 public class CartService : ICartService
 {
 	private readonly DbLabsContext _context;
+	private readonly ILogger<CartService> _logger;
 
-	public CartService(DbLabsContext context)
+	public CartService(DbLabsContext context, ILogger<CartService> logger)
 	{
 		_context = context;
+		_logger = logger;
 	}
 
 
@@ -51,9 +53,9 @@ public class CartService : ICartService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_cart_item({ci.CartId},{ci.ProductId},{ci.ProductQuantity},{ci.ProductPrice})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}
@@ -65,9 +67,9 @@ public class CartService : ICartService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call update_cart_item_product_quantity({ci.CartItemId},{ci.ProductQuantity})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}
@@ -79,9 +81,9 @@ public class CartService : ICartService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call delete_cart_item_by_id({id})");
 			return true;
 		}
-		catch (Exception)
+		catch (Exception e)
 		{
-
+			_logger.LogError(e.StackTrace + ": " + e.Message);
 		}
 		return false;
 	}
