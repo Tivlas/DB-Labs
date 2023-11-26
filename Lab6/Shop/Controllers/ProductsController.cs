@@ -23,7 +23,7 @@ namespace Shop.Controllers
 		}
 
 		// GET: Products
-		[Route("{categoryId?}")]
+		[HttpGet]
 		public async Task<IActionResult> Index(int? categoryId)
 		{
 			var categories = await _categoryService.GetListAsync();
@@ -43,7 +43,6 @@ namespace Shop.Controllers
 		}
 
 		// GET: Products/Details/5
-		[CustomAuthorize(Roles = "Admin,ProductManager")]
 		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)

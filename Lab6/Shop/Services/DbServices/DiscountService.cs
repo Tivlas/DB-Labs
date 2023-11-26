@@ -22,11 +22,14 @@ public class DiscountService : IDiscountService
 		return await _context.Discounts.FromSqlInterpolated($"select * from get_discount_by_id({id})").FirstOrDefaultAsync();
 	}
 
-	public async Task<bool> AddAsync(Discount ds)
+	public async Task<bool> AddAsync(Discount ds, IEnumerable<int> productIds)
 	{
 		try
 		{
-			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_discount({ds.Description},{ds.Name}, {ds.Percent},{ds.IsActive})");
+			int discountId = await _context.Discounts.FromSqlInterpolated($"select insert_discount({ds.Description},{ds.Name}, {ds.Percent},{ds.IsActive}) as discount_id")
+				.Select(d => d.DiscountId)
+				.FirstOrDefaultAsync();
+			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_product_discounts({discountId},{productIds.ToArray()})");
 			return true;
 		}
 		catch (Exception e)

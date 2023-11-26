@@ -1,3 +1,6 @@
+DROP PROCEDURE IF EXISTS insert_discount;
+
+-- @block
 CREATE OR REPLACE PROCEDURE insert_discount(
         p_description VARCHAR(50),
         p_name VARCHAR(30),

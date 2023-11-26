@@ -16,7 +16,7 @@ public class LoginController : Controller
         _authenticationService = authenticationService;
     }
 
-    public ActionResult Index()
+    public IActionResult Index()
     {
         return View();
     }
