@@ -50,7 +50,7 @@ public class OrderService : IOrderService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_order({order.ClientId},{order.Price})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}

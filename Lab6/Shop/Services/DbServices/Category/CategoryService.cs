@@ -1,5 +1,4 @@
-﻿using System.Xml.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Shop.Models;
 
 namespace Shop.Services.DbServices;
@@ -30,7 +29,7 @@ public class CategoryService : ICategoryService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_category({name})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}
@@ -44,7 +43,7 @@ public class CategoryService : ICategoryService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call delete_category_by_id({id})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}
@@ -58,7 +57,7 @@ public class CategoryService : ICategoryService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call update_category({id}, {newName})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}

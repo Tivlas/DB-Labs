@@ -1,6 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using Serilog;
 using Serilog.Extensions.Logging;
-using Serilog;
 using Shop.Services.DbServices;
 
 namespace Shop;

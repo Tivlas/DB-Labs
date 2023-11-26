@@ -32,7 +32,7 @@ public class DiscountService : IDiscountService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_product_discounts({discountId},{productIds.ToArray()})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}
@@ -46,7 +46,7 @@ public class DiscountService : IDiscountService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call update_discount({ds.DiscountId},{ds.Description},{ds.Name}, {ds.Percent},{ds.IsActive})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}
@@ -60,7 +60,7 @@ public class DiscountService : IDiscountService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call delete_discount_by_id({id})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}

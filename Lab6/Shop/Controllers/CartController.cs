@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Shop.Attributes;
 using Shop.Models;
 using Shop.Services.DbServices;
@@ -64,7 +58,7 @@ namespace Shop.Controllers
 				return Problem("No client with such email");
 			}
 
-			if (await _orderService.AddAsync(new Order { ClientId  = clientId.Value, Price = cartPrice }) == false)
+			if (await _orderService.AddAsync(new Order { ClientId = clientId.Value, Price = cartPrice }) == false)
 			{
 				return Problem("Add failed");
 			}

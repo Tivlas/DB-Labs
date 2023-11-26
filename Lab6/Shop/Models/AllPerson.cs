@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Shop.Models;
+﻿namespace Shop.Models;
 
 public partial class AllPerson
 {
-    public string? Name { get; set; }
+	public string? Name { get; set; }
 
-    public string? Email { get; set; }
+	public string? Email { get; set; }
 }

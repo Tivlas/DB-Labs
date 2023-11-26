@@ -7,5 +7,5 @@ public interface IClientService
 	Task<Client?> FindAsync(string email);
 	Task<Client?> LoginAsync(string email, string password);
 
-	Task<int?> GetIdByEmailAsync(string email); 
+	Task<int?> GetIdByEmailAsync(string email);
 }

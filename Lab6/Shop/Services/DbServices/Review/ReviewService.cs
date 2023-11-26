@@ -68,7 +68,7 @@ public class ReviewService : IReviewService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_review({r.ProductId},{r.ClientId},{r.Content},{r.Rating})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}
@@ -82,7 +82,7 @@ public class ReviewService : IReviewService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call update_review({r.ReviewId},{r.Content},{r.Rating})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}
@@ -96,7 +96,7 @@ public class ReviewService : IReviewService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call delete_review({r.ReviewId})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}

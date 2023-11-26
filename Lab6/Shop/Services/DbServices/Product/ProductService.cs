@@ -71,7 +71,7 @@ public class ProductService : IProductService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call insert_product({product.ProductCategoryId},{product.Price},{product.Name},{product.ProductionDate},{product.Quantity},{product.Brand},{product.Description})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}
@@ -85,7 +85,7 @@ public class ProductService : IProductService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call update_product({product.ProductId},{product.ProductCategoryId},{product.Price},{product.Name},{product.ProductionDate},{product.Quantity},{product.Brand},{product.Description})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}
@@ -99,7 +99,7 @@ public class ProductService : IProductService
 			await _context.Database.ExecuteSqlInterpolatedAsync($"call delete_product_by_id({id})");
 			return true;
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 
 		}
