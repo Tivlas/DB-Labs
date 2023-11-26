@@ -29,6 +29,23 @@ public class ProductService : IProductService
 			}).ToListAsync();
 	}
 
+	public async Task<IEnumerable<Product>?> GetListByCategoryIdAsync(int categoryId)
+	{
+		return await _context.Products.FromSqlInterpolated($"select * from get_products_with_categories_by_category_id({categoryId})")
+			.Select(p => new Product
+			{
+				ProductId = p.ProductId,
+				Name = p.Name,
+				Brand = p.Brand,
+				Price = p.Price,
+				ProductCategoryId = p.ProductCategoryId,
+				ProductCategory = p.ProductCategory,
+				ProductionDate = p.ProductionDate,
+				Quantity = p.Quantity,
+				Description = p.Description,
+			}).ToListAsync();
+	}
+
 	public async Task<Product?> GetByIdAsync(int id)
 	{
 		return await _context.Products.FromSqlInterpolated($"select * from get_product_with_category_by_id({id})")

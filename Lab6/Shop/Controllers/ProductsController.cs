@@ -23,10 +23,23 @@ namespace Shop.Controllers
 		}
 
 		// GET: Products
-		public async Task<IActionResult> Index()
+		[Route("{categoryId?}")]
+		public async Task<IActionResult> Index(int? categoryId)
 		{
-			var products = await _productService.GetListAsync();
-			return products is null ? Problem("No products") : View(products);
+			var categories = await _categoryService.GetListAsync();
+			ViewData["Categories"] = categories;
+
+			IEnumerable<Product>? products = null;
+			if (categoryId.HasValue && categoryId.Value != -1)
+			{
+				ViewData["SelectedCategoryId"] = categoryId.Value;
+				products = await _productService.GetListByCategoryIdAsync(categoryId.Value);
+			}
+			else
+			{
+				products = await _productService.GetListAsync();
+			}
+			return View(products);
 		}
 
 		// GET: Products/Details/5
