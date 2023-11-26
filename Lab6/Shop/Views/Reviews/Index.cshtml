@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Shop.Models.Review>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1>Reviews</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Content)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Rating)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Date)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Product)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Content)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Rating)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Date)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Product.Name)
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.ReviewId">Edit</a> |
+					<a asp-action="Details" asp-route-id="@item.ReviewId">Details</a> |
+					<a asp-action="Delete" asp-route-id="@item.ReviewId">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@using (Html.BeginForm("Create", "Reviews", FormMethod.Post))
+{
+	@Html.Hidden("productId", ViewContext.HttpContext.Request.Query["productId"])
+
+	<div>
+		<label for="content">Content:</label>
+		@Html.TextArea("content", new { rows = 4, cols = 40 })
+	</div>
+
+	<div>
+		<label for="rating">Rating:</label>
+		@Html.TextBox("rating", null, new { type = "number", min = 1, max = 5 })
+	</div>
+
+	<button type="submit">Submit</button>
+}
