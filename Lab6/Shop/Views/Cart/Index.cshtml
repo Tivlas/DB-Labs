@@ -53,3 +53,9 @@
 <h2>
 	Total: @CartPrice
 </h2>
+<form asp-action="PlaceOrder" method="post">
+	<div class="form-group">
+		<input type="hidden" name="cartPrice" value="@CartPrice" />
+		<input type="submit" value="Place order" class="btn btn-primary" />
+	</div>
+</form>
