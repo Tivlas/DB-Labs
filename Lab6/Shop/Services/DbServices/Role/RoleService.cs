@@ -12,7 +12,7 @@ public class RoleService : IRoleService
 		_context = context;
 	}
 
-	public async Task<List<EmployeeRole>> GetRolesListAsync()
+	public async Task<IEnumerable<EmployeeRole>?> GetRolesListAsync()
 	{
 		return await _context.EmployeeRoles.FromSqlRaw("SELECT * from employee_role").ToListAsync();
 	}

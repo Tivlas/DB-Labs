@@ -34,7 +34,7 @@
 						@if (addEmployeeRoles.Any(r => User.IsInRole(r)))
 						{
 							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Signup" asp-action="SignupEmployee">AddEmployee</a>
+								<a class="nav-link text-dark" asp-area="" asp-controller="Signup" asp-action="AddEmployee">AddEmployee</a>
 							</li>
 						}
 						@if (productCategoriesRoles.Any(r => User.IsInRole(r)))

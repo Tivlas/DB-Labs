@@ -6,5 +6,5 @@ public partial class EmployeeRole
 
 	public string Name { get; set; } = null!;
 
-	public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
+	public virtual ICollection<Employee>? Employees { get; set; } = null;
 }

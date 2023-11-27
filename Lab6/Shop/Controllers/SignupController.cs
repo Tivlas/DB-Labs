@@ -9,7 +9,7 @@ public class SignupController : Controller
 	private readonly IClientService _clientService;
 	private readonly IEmployeeService _employeeService;
 	private readonly IRoleService _roleService;
-	private List<EmployeeRole>? _employeeRoles = null;
+	private IEnumerable<EmployeeRole>? _employeeRoles = null;
 
 	public SignupController(IClientService clientService, IEmployeeService employeeService, IRoleService roleService)
 	{
@@ -59,16 +59,14 @@ public class SignupController : Controller
 			var success = await _employeeService.AddEmployeeAsync(employee);
 			if (!success)
 			{
-				TempData["Roles"] = _employeeRoles;
 				TempData["ErrorMessage"] = "Invalid form data!";
-				return View(employee);
+				return View((employee, _employeeRoles));
 			}
 		}
 		else
 		{
-			TempData["Roles"] = _employeeRoles;
 			TempData["ErrorMessage"] = "Invalid form data!";
-			return View(employee);
+			return View((employee, _employeeRoles));
 		}
 		return RedirectToAction("Index", "Home");
 	}

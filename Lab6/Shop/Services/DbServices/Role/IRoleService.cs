@@ -3,5 +3,5 @@
 namespace Shop.Services.DbServices;
 public interface IRoleService
 {
-	Task<List<EmployeeRole>> GetRolesListAsync();
+	Task<IEnumerable<EmployeeRole>?> GetRolesListAsync();
 }

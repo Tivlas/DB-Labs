@@ -1,4 +1,4 @@
-﻿@model Shop.Models.Employee
+﻿@model (Shop.Models.Employee Employee, IEnumerable<EmployeeRole> Roles)
 
 <form method="post" action="/Signup/AddEmployee">
 	<label for="firstName">First Name:</label>
@@ -24,7 +24,7 @@
 
 	<label for="employeeRoleId">Role:</label>
 	<select id="employeeRoleId" name="EmployeeRoleId">
-		@foreach (var role in TempData["Roles"] as List<Shop.Models.EmployeeRole>)
+		@foreach (var role in Model.Roles)
 		{
 			<option value="@role.EmployeeRoleId">@role.Name</option>
 		}
