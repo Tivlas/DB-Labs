@@ -135,10 +135,7 @@ namespace Shop.Controllers
 			{
 				return Problem("No client with such email");
 			}
-			if (review.ClientId != clientId)
-			{
-				return Forbid();
-			}
+			review.ClientId = clientId.Value;
 
 			if (ModelState.IsValid)
 			{
