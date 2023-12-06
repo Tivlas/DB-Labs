@@ -27,11 +27,6 @@ SELECT *
 FROM cart_item;
 
 -- @block
-ALTER TABLE "order"
-ALTER COLUMN "date"
-SET DEFAULT CURRENT_TIMESTAMP;
-
--- @block
 INSERT INTO "order" (client_id, price)
 VALUES (1, 13695);
 

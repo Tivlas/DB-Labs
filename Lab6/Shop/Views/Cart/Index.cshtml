@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Shop.Models.CartItem>
+
+@{
+	ViewData["Title"] = "Index";
+	var CartPrice = Model.FirstOrDefault()?.Cart?.Price ?? 0;
+}
+
+<h1>Cart</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Product)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.ProductPrice)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.ProductQuantity)
+			</th>
+			<th>
+				Subtotal
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Product!.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.ProductPrice)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.ProductQuantity)
+				</td>
+				<td>
+					@(item.ProductQuantity * item.ProductPrice)
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.CartItemId">Edit</a> |
+					<a asp-action="Details" asp-route-id="@item.CartItemId">Details</a> |
+					<a asp-action="Delete" asp-route-id="@item.CartItemId">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<h2>
+	Total: @CartPrice
+</h2>
+<form asp-action="PlaceOrder" method="post">
+	<div class="form-group">
+		<input type="hidden" name="cartPrice" value="@CartPrice" />
+		<input type="submit" value="Place order" class="btn btn-primary" />
+	</div>
+</form>

@@ -1,0 +1,35 @@
+﻿@model Shop.Models.Client
+
+<h2>Sign Up</h2>
+
+<form method="post" action="/Signup/Signup">
+    <div>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="FirstName" value="@Model?.FirstName" required>
+    </div>
+    <div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="LastName" value="@Model?.LastName" required>
+    </div>
+    <div>
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="Phone" value="@Model?.Phone" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="Password" required>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="Email" value="@Model?.Email" required>
+    </div>
+    <div>
+        <button type="submit">Add</button>
+    </div>
+</form>
+@if (TempData.ContainsKey("ErrorMessage"))
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
